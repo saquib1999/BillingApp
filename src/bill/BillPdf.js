@@ -26,7 +26,7 @@ const BillPdf = (props) => {
   const getGSTTable = (gstType) => {
     var gsttable = [];
 
-    props.gstMap.forEach((value, key) =>
+    props.gstMap?.forEach((value, key) =>
       gsttable.push(
         <tr>
           <td>
@@ -92,10 +92,14 @@ const BillPdf = (props) => {
                       <td>{prod.gstAmount / 2}</td>
                       <td>{prod.gst / 2}</td>
                       <td>{prod.gstAmount / 2}</td>
-                      <td>{prod.MRP}</td>
-                      <td>{prod.PTR}</td>
-                      <td>{prod.PTS}</td>
-                      <td>{prod.amount}</td>
+                      <td>{Number.parseFloat(prod.MRP).toFixed(2)}</td>
+                      <td>{Number.parseFloat(prod.PTR).toFixed(2)}</td>
+                      <td>
+                        {props.rate !== "PTR"
+                          ? Number.parseFloat(prod.PTS).toFixed(2)
+                          : ""}
+                      </td>
+                      <td>{Number.parseFloat(prod.amount).toFixed(2)}</td>
                     </tr>
                   );
                 })}

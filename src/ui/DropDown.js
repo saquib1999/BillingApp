@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const DropDown = (props) => {
   const dropDownName = props.dropDownName;
@@ -23,10 +23,14 @@ const DropDown = (props) => {
     props.onSelect(opt);
   };
 
+  useEffect(() => {
+    setInput("");
+  }, [props.clr]);
   return (
     <div className="searchBox">
       <div onClick={toggleDropDown}>
         <input
+          style={{ zIndex: "-1" }}
           placeholder={props.placeholder}
           value={input}
           onChange={onInputChange}
@@ -34,11 +38,20 @@ const DropDown = (props) => {
       </div>
 
       {show && (
-        <div className="optionBox">
+        <div
+          className="optionBox"
+          style={{
+            position: "absolute",
+            backgroundColor: "white",
+            zIndex: "2",
+            border: " 1px solid black",
+          }}
+        >
           {props.options &&
             props.options.map((c, i) => {
               return (
                 <div
+                  tabIndex={2}
                   key={c.key}
                   onClick={() => onSelect(c)}
                   className="options"

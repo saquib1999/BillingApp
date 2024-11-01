@@ -1,98 +1,96 @@
 #billpage {
-    padding: 5mm;
- display: flex;
- justify-content: center;
- align-items: center;
+  padding-left: 5mm;
+  margin: 5mm;
+  display: flex;
+  align-items: center;
+  height: 150mm;
+  width: 220mm;
 }
 
 .BillBox {
-    min-height: 140mm;
-    width: 210mm;
-    display: flex;
+  height: 140mm;
+  width: 210mm;
+  display: flex;
   flex-flow: column;
   font-size: 10px;
-
 }
 
-.BorderClass{
-    box-sizing: border-box;
-    border: 1.5px solid black;
-
-
+.BorderClass {
+  box-sizing: border-box;
+  border: 1.5px solid black;
 }
 
 .Header {
- min-height: 30mm;
- display: grid;
- grid-template-columns: 2fr 1fr 2fr;
-
+  min-height: 30mm;
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
 }
 
 .Body {
-    align-items: start;
-    
+  align-items: start;
 
-height: 60mm;
+  height: 60mm;
 }
 
 .calculation {
-    min-height: fit-content;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 3fr 1fr 1fr 2fr;
-  }
+  min-height: fit-content;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 2fr;
+}
 .Footer {
-min-height: 12mm;
+  min-height: 12mm;
 }
 .PaddingClass {
-    padding: 1mm;
+  padding: 1mm;
 }
 
-table tbody  td,table thead th {
-    border: 1.5px solid black;
+table tbody td,
+table thead th {
+  border: 1.5px solid black;
+}
 
-  }
+.CGST,
+.SGST,
+.total {
+  font-weight: bold;
+  border-bottom: 0.4mm solid black;
+  width: 100%;
+}
 
-  .CGST, .SGST ,.total{
-    font-weight: bold;
-    border-bottom: 0.4mm solid black;
-    width: 100%;
-  }
-  
-  .CGST, .SGST {
-    text-align: center;
-    padding: 2mm;
-  }
-  
+.CGST,
+.SGST {
+  text-align: center;
+  padding: 2mm;
+}
 
-  #table1{
-    width: 100%;
-    text-align: center;
-  }
+#table1 {
+  width: 100%;
+  text-align: center;
+}
 
+#table2 {
+  width: 100%;
+}
 
-  
-  #table2 {
-    width: 100%;
+#table2 td {
+  padding: 1mm;
+}
 
-  }
+#AlignRight {
+  text-align: right;
+}
 
-  #table2 td {
-    padding: 1mm
-  }
+table,
+tbody,
+.LastRow {
+  height: 100%;
+}
 
-  #AlignRight {
-    text-align: right;
-  }
+#table {
+  width: 100%;
+}
 
-  table,tbody,.LastRow {
-    height: 100%;
-  }
-
-  #table{
-    width: 100%;
-  }
-
-  .col1{
-    min-width: 40mm;
-  }
+.col1 {
+  min-width: 40mm;
+}

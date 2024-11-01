@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getDataArray } from "../functions/getSheetData";
+import { getDataArray } from "../functions/useGetSheetData";
 import TableUI from "./TableUI";
 import ProductContext from "../contextprovider/productcontext";
 

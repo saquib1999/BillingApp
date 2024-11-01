@@ -7,6 +7,8 @@ import ProductContext from "../contextprovider/productcontext";
 import Pdf from "../bill/Pdf";
 import BillUi from "../bill/BillUi";
 import BillPdf from "../bill/BillPdf";
+import { renderToString } from "react-dom/server";
+
 const Billing = () => {
   function padTo2Digits(num) {
     return num.toString().padStart(2, "0");
@@ -31,6 +33,8 @@ const Billing = () => {
 
   const [prodCart, setProdCart] = useState([]);
   const [customer, setCustomer] = useState("");
+  const [rate, setRate] = useState("");
+
   var totalAmount = format2digit(grossAmount - cdAmount + Number(gst));
 
   const addProd2Cart = (value) => {
@@ -43,9 +47,11 @@ const Billing = () => {
   useEffect(() => {
     const map = new Map();
     var value = Number(0);
+    let preValueGst = 0;
     prodCart.forEach((prod) => {
       value = value + Number(prod.amount);
-      setGst((preValue) => format2digit(preValue + prod.gstAmount));
+      preValueGst = format2digit(Number(preValueGst) + Number(prod.gstAmount));
+
       const gstAmount = map.get(prod.gst);
       if (!gstAmount) {
         map.set(prod.gst, Number(prod.gstAmount));
@@ -53,7 +59,7 @@ const Billing = () => {
         map.set(prod.gst, Number(prod.gstAmount) + gstAmount);
       }
     });
-
+    setGst(preValueGst);
     setGstMap(map);
     setGrossAmount(format2digit(value));
   }, [prodCart]);
@@ -93,6 +99,24 @@ const Billing = () => {
             />
           </div>
           <div>
+            <input
+              type="radio"
+              name="cost"
+              value="PTR"
+              onChange={(e) => setRate(e.target.value)}
+            />
+            <label htmlFor="ptr" value="PTR">
+              PTR
+            </label>{" "}
+            <input
+              type="radio"
+              name="cost"
+              value="PTS"
+              onChange={(e) => setRate(e.target.value)}
+            />
+            <label value="PTS">PTS</label>
+          </div>
+          <div>
             <label>Bill Date</label>
             <input
               type="date"
@@ -103,10 +127,9 @@ const Billing = () => {
             />
           </div>
           <div>
-            <label>Medical Name</label>
             <AddCustomer customer={customer} setCustomer={setCustomer} />
           </div>
-          <AddProducts addProd2Cart={addProd2Cart} />
+          <AddProducts addProd2Cart={addProd2Cart} rate={rate} />
           <label>CD </label>{" "}
           <input
             min="0"
@@ -129,6 +152,7 @@ const Billing = () => {
               gst={gst}
               grossAmount={grossAmount}
               prodCart={prodCart}
+              customer={customer}
               deleteCart={deleteCart}
             />
           )) || <h3>Cart is Empty</h3>}
@@ -147,6 +171,7 @@ const Billing = () => {
           customer={customer}
           products={prodCart}
           gstMap={gstMap}
+          rate={rate}
         />
       )}
     </>

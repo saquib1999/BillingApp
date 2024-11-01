@@ -10,6 +10,8 @@ const Cart = ({
   totalAmount,
   billNo,
   pdfDisabled,
+  billPdf,
+  customer,
 }) => {
   return (
     <>
@@ -29,7 +31,12 @@ const Cart = ({
               <b>Total Amount : </b> {totalAmount}
             </div>
           </div>
-          <Pdf id={billNo} disabled={pdfDisabled()} />
+          <Pdf
+            id={billNo}
+            disabled={pdfDisabled()}
+            billPdf={billPdf}
+            customer={customer}
+          />
 
           <table>
             <thead>

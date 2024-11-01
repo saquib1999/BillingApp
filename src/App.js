@@ -12,15 +12,17 @@ import Products from "./ui/Products";
 import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import MedicalContext from "./contextprovider/medicalcontext";
 import ProductContext from "./contextprovider/productcontext";
-import { getDataArray } from "./functions/getSheetData";
+import { useGetDataArray } from "./functions/useGetSheetData";
 import Footer from "./ui/Footer";
+import FileContext from "./contextprovider/fileContext";
+import Input from "./Input";
 
 function App() {
   const MEDICAL_SHEET = "medical";
   const PRODUCT_SHEET = "product";
   const [medicalArray, setMedicalArray] = useState(null);
   const [productArray, setProductArray] = useState(null);
-
+  const { getDataArray } = useGetDataArray();
   useEffect(() => {
     const getData = async () => {
       const jsonDataMedical = await getDataArray(MEDICAL_SHEET);

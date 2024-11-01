@@ -11,25 +11,30 @@ const AddProducts = (props) => {
     key: data.BATCH_NO,
   }));
 
-  console.log("addcustomers" + JSON.stringify(fixProdList));
-
   const [products, setProducts] = useState(null);
 
   const [product, setProduct] = useState("");
   const [cartKey, setCartKey] = useState(0);
   const [mrp, setMrp] = useState("");
-  const [ptr, setPtr] = useState("0");
-  const [pts, setPts] = useState("0");
-  const [qty, setQty] = useState("0");
-  const [scm, setScm] = useState("0");
+  const [ptr, setPtr] = useState(0);
+  const [pts, setPts] = useState(0);
+  const [qty, setQty] = useState(0);
+  const [scm, setScm] = useState(0);
   const [gst, setGst] = useState("12");
-  const [rate, setRate] = useState("PTR");
-  const amount = () => format2digit(qty * product[rate]);
+  const [clr, setClr] = useState(true);
+  const { rate } = props;
+  const amount = () => {
+    console.log(product, "+++++++++++++++");
+    const cost = rate === "PTS" ? pts : ptr;
+    return format2digit(qty * cost);
+  };
   const gstAmount = () => 2 * format2digit((amount() * gst) / 2 / 100);
 
   const onInputChange = (value) => {
     setProducts(
-      fixProdList.filter((c) => c.NAME.includes(value.toLocaleUpperCase()))
+      fixProdList.filter((c) =>
+        c.NAME.toLocaleUpperCase().includes(value.toLocaleUpperCase())
+      )
     );
   };
   const onSelectProducts = (prod) => {
@@ -40,9 +45,12 @@ const AddProducts = (props) => {
   };
 
   const onAdd = (e) => {
+    console.log(gstAmount(), "gstAmount()******");
     e.preventDefault();
     var localProd = {
       ...product,
+      PTR: ptr,
+      PTS: pts,
       qty: qty,
       scm: scm,
       amount: amount(),
@@ -55,12 +63,13 @@ const AddProducts = (props) => {
     setCartKey(cartKey + 1);
     props.addProd2Cart(localProd);
 
-    console.log(product);
+    setProduct("");
+    setClr(!clr);
   };
 
   const isValid = () => {
     console.log(qty, product[rate]);
-    return !!+qty && !!+product[rate];
+    return rate && product && qty && !!+product[rate];
   };
   return (
     <>
@@ -75,6 +84,7 @@ const AddProducts = (props) => {
               onInputChange={onInputChange}
               options={products}
               placeholder={"Select products"}
+              clr={clr}
             />
           </div>
           <div className="productValues">
@@ -133,26 +143,7 @@ const AddProducts = (props) => {
               />
             </div>
           </div>
-          <div>
-            <input
-              checked
-              type="radio"
-              name="cost"
-              value="PTR"
-              onChange={(e) => setRate(e.target.value)}
-            />
-            <label htmlFor="ptr" value="PTR">
-              PTR
-            </label>{" "}
-            <input
-              type="radio"
-              name="cost"
-              value="PTS"
-              onChange={(e) => setRate(e.target.value)}
-            />
-            <label value="PTS">PTS</label>
-          </div>
-          <br />
+
           <div>
             <button
               className="btn btn-primary"
